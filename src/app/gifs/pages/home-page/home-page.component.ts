@@ -10,7 +10,11 @@ import { GifsService } from '../../services/gifs.service';
 export class HomePageComponent {
   constructor(private gifService: GifsService){}
 
-  get gifs(): Gif[]{
+  get gifs(){
     return this.gifService.gifList;
+  }
+
+  get mostrarSpinner(){
+    return this.gifService.showSpinner;
   }
 }

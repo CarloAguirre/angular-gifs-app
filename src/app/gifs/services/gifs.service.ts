@@ -1,12 +1,15 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Gif, SearchResponse } from '../interfaces/gifs.interfaces';
+import { Concordancias } from '../interfaces/concordancias.interfaces';
 
 
 @Injectable({providedIn: 'root'})
 export class GifsService {
 
-  public gifList: Gif[] = [];
+  public gifList: Concordancias[] = [];
+
+  public showSpinner: boolean = false;
 
   private _tagsHistory: string[] = [];
   private apiUrl = "http://api.giphy.com/v1/gifs"
@@ -27,24 +30,42 @@ export class GifsService {
     this._tagsHistory.unshift(tag)
   }
 
-searchTag(tag: string): void{
+  async searchTag(tag: string) {
     if(tag.length === 0) return;
-    this.organizeHistory(tag)
+    // Supongamos que tienes algún dato que deseas enviar en el cuerpo de la solicitud POST
+    this.showSpinner = true;
+    const requestData = {
+        tag: tag,
+        // Otros datos que desees enviar...
+    };
 
-    // fetch(`http://api.giphy.com/v1/gifs/search?api_key=${GIPHY_API_KEY}&q=${tag}&limit=10`)
-    //   .then(res => res.json())
-    //   .then(data=> console.log(data))
+    // Configurar la solicitud
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json', // Ajusta el tipo de contenido según tus necesidades
+        },
+        body: JSON.stringify(requestData),
+    };
 
-    const params = new HttpParams()
-      .set('api_key', this.GIPHY_API_KEY)
-      .set('limit', '10')
-      .set('q', tag)
+    // Realizar la solicitud POST
+    try {
+      const response = await fetch('http://localhost:8080/api/gpt', requestOptions);
+      const data = await response.json(); // Si esperas una respuesta JSON
 
-    this.http.get<SearchResponse>(`${this.apiUrl}/search`, {params})
-      .subscribe((res) =>{
-        this.gifList = res.data
-        console.log({gifs: this.gifList})
-      })
+      if (Array.isArray(data) && data.length < 2) {
+          // Si data es un array y tiene longitud de uno
+          window.alert("No hay referencias")
+          this.showSpinner = false;
+      } else {
+          // Si no cumple la condición
+          this.gifList = data;
+          this.organizeHistory(tag);
+          this.showSpinner = false;
+      }
+  } catch (error) {
+        console.error('Error al realizar la solicitud POST:', error);
+    }
+}
 
-  }
 }

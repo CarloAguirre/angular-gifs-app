@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { Gif } from '../../interfaces/gifs.interfaces';
+import { Concordancias } from '../../interfaces/concordancias.interfaces';
 
 @Component({
   selector: 'gifs-card-list',
@@ -9,5 +10,8 @@ import { Gif } from '../../interfaces/gifs.interfaces';
 export class CardListComponent {
 
   @Input()
-  public gifs: Gif[] = [];
+  public gifs: Concordancias[] = [];
+
+  @Input()
+  public mostrarSpinner: boolean = false;
 }

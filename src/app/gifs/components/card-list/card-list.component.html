@@ -1,20 +1,28 @@
 
 
 <div class="row card-list__container">
-  <div *ngFor="let gif of gifs" class="col-md-3 col-sm-6">
-    <div class="card mb-2 bg-dark text-center">
-      <!-- TODO: crear imagen  -->
-      <div class="card-body text-white">
-        <img
-          [src]="gif.images.downsized_medium.url"
-          [alt]="gif.title"
-          class="card-img-top">
-        <p class="card-text mt-2">
-          {{gif.title}}
-        </p>
-      </div>
-    </div>
+  <div *ngIf="mostrarSpinner">
+    <!-- spinner -->
+    <button class="btn btn-dark" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      Loading...
+    </button>
+
   </div>
 
+  <div *ngFor="let gif of gifs" class="col-md-3 col-sm-6" >
+    <div *ngIf="!mostrarSpinner">
+      <div class="card mb-2 bg-dark text-center">
+        <!-- TODO: crear imagen  -->
+        <div class="card-body text-white">
+          <h2>{{gif.concordancia}}</h2>
+          <p class="card-text mt-2">
+            {{gif.relacion}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </div>
 
 </div>
