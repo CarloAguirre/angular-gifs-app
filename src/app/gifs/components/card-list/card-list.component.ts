@@ -21,7 +21,7 @@ export class CardListComponent {
   public mostrarSpinner: boolean = false;
 
   public text: Verse[] = []
-
+  public highlightedVerses: number[] = [];
   public showTextOutput: boolean | null = this.showText.showText;
   public index: number | null = this.showText.index
 
@@ -53,6 +53,8 @@ export class CardListComponent {
     this.showText.setShowText(true)
     this.selectedConcordancia = concordancia
     this.index = index;
+    // Lógica para obtener los versículos a resaltar
+    this.highlightedVerses = this.getHighlightedVerses(concordancia);
     const libroSinAcentos = this.removeAccents(concordancia.libro);
     const bibleFetch = await fetch(`https://bible-api.deno.dev/api/read/rv1960/${libroSinAcentos}/${concordancia.capitulo}`)
     const response = await bibleFetch.json()
@@ -66,4 +68,27 @@ export class CardListComponent {
       this.showText.setShowText(false)
     }
   }
+
+  private getHighlightedVerses(concordancia: Concordancias): number[] {
+    const verseRange = concordancia.concordancia.split('-');
+
+    if (verseRange.length === 1) {
+      // Solo hay un versículo
+      const verseNumber = parseInt(verseRange[0].split(':')[1], 10);
+      return [verseNumber];
+    } else if (verseRange.length === 2) {
+      // Hay un rango de versículos
+      const startVerse = parseInt(verseRange[0].split(':')[1], 10);
+      const endVerse = parseInt(verseRange[1], 10);
+      return Array.from({ length: endVerse - startVerse + 1 }, (_, i) => startVerse + i);
+    }
+
+    return [];
+  }
+
+  isHighlighted(verseNumber: number): boolean {
+    // Comprueba si el versículo actual está en la lista de versículos resaltados
+    return this.highlightedVerses.includes(verseNumber);
+  }
+
 }

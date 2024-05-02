@@ -52,8 +52,8 @@ export class GifsService {
     try {
       const response = await fetch('https://ia-server-5.onrender.com/api/gpt', requestOptions);
       const data = await response.json(); // Si esperas una respuesta JSON
-
-      if (Array.isArray(data) && data.length < 1) {
+      console.log(data)
+      if (Array.isArray(data) && data.length < 2) {
           // Si data es un array y tiene longitud de uno
           window.alert("No hay referencias")
           this.showSpinner = false;

@@ -8,7 +8,7 @@ import { ShowText } from 'src/app/shared/services/shared.service';
     <h5>Buscar:</h5>
     <input type="text"
     class="form-control"
-    placeholder="Buscar concordancias..."
+    placeholder="Buscar relaciones..."
     #txtTagInput
     (keyup.enter)="searchTag()"
     (keyup)="onKeyUp($event)"

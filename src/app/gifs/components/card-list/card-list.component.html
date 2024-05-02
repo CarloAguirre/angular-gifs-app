@@ -40,9 +40,13 @@
     <div *ngIf="showTextOutput === false" class="p-4">
       <h2>{{selectedConcordancia.libro}} {{selectedConcordancia.capitulo}}</h2>
       <p *ngFor="let vers of text">
-        <span class="verse-number">({{vers.number}})</span>{{vers.verse}}
+        <span class="verse-number">({{vers.number}})</span>
+        <span [ngStyle]="{ 'background-color': isHighlighted(vers.number) ? 'yellow' : 'transparent' }">
+          {{vers.verse}}
+        </span>
       </p>
     </div>
+
 
     <div *ngIf="showTextOutput === null"></div>
   </div>
