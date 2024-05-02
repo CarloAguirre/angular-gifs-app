@@ -1,10 +1,16 @@
 .card-list__container{
   overflow-y: auto;
-  max-height: 100vh;
+  max-height: 90vh;
   height: auto;
 }
 .verse-number {
   font-size: smaller;
   font-style: italic;
   margin-right: 5px;
+}
+.text-box {
+  /* display: flex;
+  align-items: center;
+  justify-content: center; */
+  min-height: 20vh;
 }

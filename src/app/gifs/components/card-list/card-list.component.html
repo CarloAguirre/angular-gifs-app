@@ -10,23 +10,26 @@
 
   </div>
 
-  <div *ngFor="let gif of gifs" class="col-md-3 col-sm-6" (click)="onCardClick(gif)" >
-    <div *ngIf="!mostrarSpinner">
-      <div class="card mb-2 bg-dark text-center">
-        <!-- TODO: crear imagen  -->
-        <div class="card-body text-white">
-          <h2>{{gif.concordancia}}</h2>
-          <p class="card-text mt-2">
-            {{gif.relacion}}
-          </p>
+
+
+    <div *ngFor="let gif of gifs" class="col-md-3 col-sm-6" (click)="onCardClick(gif)" >
+      <div *ngIf="!mostrarSpinner">
+        <div class="card mb-2 bg-dark text-center">
+          <!-- TODO: crear imagen  -->
+          <div class="card-body text-white">
+            <h2>{{gif.concordancia}}</h2>
+            <p class="card-text mt-2">
+              {{gif.relacion}}
+            </p>
+          </div>
         </div>
       </div>
+
     </div>
 
-  </div>
 
-  <div >
-    <div *ngIf="showText" class="mt-5" style="display: flex; justify-content: center;">
+  <div class="text-box">
+    <div *ngIf="showText" class="mt-2" style="display: flex; justify-content: center;">
       <!-- spinner -->
       <button class="btn btn-dark" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
