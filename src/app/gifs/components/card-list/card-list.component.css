@@ -9,8 +9,17 @@
   margin-right: 5px;
 }
 .text-box {
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   min-height: 20vh;
+}
+.card-body {
+  color: white;
+}
+
+.card-body:hover{
+  color:burlywood;
+  transition: 0.3s ease;
+  cursor: pointer;
+}
+.selected-card {
+  color:burlywood;
 }

@@ -12,11 +12,11 @@
 
 
 
-    <div *ngFor="let gif of gifs" class="col-md-3 col-sm-6" (click)="onCardClick(gif)" >
+    <div *ngFor="let gif of gifs; let i = index" class="col-md-3 col-sm-6 card__wrapper p-2" (click)="onCardClick(gif, i)">
       <div *ngIf="!mostrarSpinner">
         <div class="card mb-2 bg-dark text-center">
           <!-- TODO: crear imagen  -->
-          <div class="card-body text-white">
+          <div class="card-body" [ngClass]="{'selected-card': index === i}">
             <h2>{{gif.concordancia}}</h2>
             <p class="card-text mt-2">
               {{gif.relacion}}
@@ -29,7 +29,7 @@
 
 
   <div class="text-box">
-    <div *ngIf="showText" class="mt-2" style="display: flex; justify-content: center;">
+    <div *ngIf="showTextOutput === true" class="mt-2 loader" style="display: flex; justify-content: center;">
       <!-- spinner -->
       <button class="btn btn-dark" type="button" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -37,12 +37,14 @@
       </button>
 
     </div>
-    <div *ngIf="!showText" class="p-4">
+    <div *ngIf="showTextOutput === false" class="p-4">
       <h2>{{selectedConcordancia.libro}} {{selectedConcordancia.capitulo}}</h2>
       <p *ngFor="let vers of text">
         <span class="verse-number">({{vers.number}})</span>{{vers.verse}}
       </p>
     </div>
+
+    <div *ngIf="showTextOutput === null"></div>
   </div>
 
 </div>
