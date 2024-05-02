@@ -10,6 +10,7 @@ import { GifsService } from '../../services/gifs.service';
     placeholder="Buscar concordancias..."
     #txtTagInput
     (keyup.enter)="searchTag()"
+    (keyup)="onKeyUp($event)"
    >
   `,
   styleUrls: ['./search-box.component.css']
@@ -27,5 +28,12 @@ export class SearchBoxComponent {
     this.gifService.searchTag(newTag)
 
     this.tagInput.nativeElement.value = "";
+  }
+
+  onKeyUp(event: KeyboardEvent) {
+    // Si la tecla presionada es 'Enter' o 'Intro', realiza la búsqueda
+    if (event.key === 'Enter' || event.key === 'Intro') {
+      this.searchTag();
+    }
   }
 }
